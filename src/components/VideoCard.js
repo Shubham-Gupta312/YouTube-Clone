@@ -7,9 +7,10 @@ const VideoCard = ({
   video: {
     id: { videoId },
     snippet,
-  },
+  }, 
 }) => {
-  // console.log(videoId, snippet)
+  // videoId
+  // console.log(snippet)
   return (
     <Card
       sx={{
@@ -38,6 +39,7 @@ const VideoCard = ({
             {snippet?.channelTitle || ""}
             <CheckCircle sx={{ fontSize: "12px", color: "gray", ml: "5px" }} />
           </Typography>
+          
         </Link>
       </CardContent>
     </Card>

@@ -11,7 +11,7 @@ const Feed = () => {
 
   useEffect(()=> {
     //  setVideos(null);
-    fetchFromAPI(`search?part=snippet&q=`).then((data)=> setVideos(data.items));
+    fetchFromAPI(`search?part=snippet&q=${searchTerm}`).then((data)=> setVideos(data.items));
   }, [searchTerm])
 
   return (
