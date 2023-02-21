@@ -16,7 +16,6 @@ export const logo = 'https://th.bing.com/th/id/R.77208524214ac2b0b957bf7afa4f7f0
 
 export const categories = [
   { name: 'Home', icon: <HomeIcon />, },
-  { name: 'JS Mastery', icon: <CodeIcon />, },
   { name: 'Coding', icon: <CodeIcon />, },
   { name: 'ReactJS', icon: <CodeIcon />, },
   { name: 'NextJS', icon: <CodeIcon />, },

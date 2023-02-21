@@ -3,20 +3,20 @@ import { Box, Typography, CardContent, CardMedia } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-const ChannelCard = ({ channelDetail }) => {
+const ChannelCard = ({ channelDetail, marginTop }) => {
   return (
     <Box
       sx={{
         // boxShadow:
         //   "inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255 255 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3)",
-        // borderRadius: "20px",
+        borderRadius: "20px",
         display:'flex',
         justifyContent:'center',
         alignItems: 'center',
-        width: {xs: '346px', md: '310px'},
-        height: '306px',
-        margin: 'auto'
-
+        width: {xs: '356px', md: '320px'},
+        height: '326px',
+        margin: 'auto',
+        marginTop,
       }}
     >
       <Link to={`/channel/${channelDetail?.id?.channelId}`}>
