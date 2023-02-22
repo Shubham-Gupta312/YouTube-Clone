@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { Navbar, Feed, VideoDetail, ChannelDetail, SearchFeed } from "../../src/components/index";
 
 
+
 const Home = () => { 
   return (
     <BrowserRouter>
