@@ -5,6 +5,7 @@ import { Navbar, Feed, VideoDetail, ChannelDetail, SearchFeed } from "../../src/
 
 
 
+
 const Home = () => { 
   return (
     <BrowserRouter>
@@ -16,7 +17,8 @@ const Home = () => {
           <Route path="/channel/:id" exact element={<ChannelDetail />} />
           <Route path="/search/:searchTerm" exact element={<SearchFeed />} />
         </Routes>
-      </Box>
+        </Box>
+        
     </BrowserRouter>
   );
 };

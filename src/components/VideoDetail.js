@@ -1,41 +1,74 @@
-import React, {useState, useEffect} from 'react';
-import { Link, useParams } from 'react-router-dom';
-import ReactPlayer from 'react-player';
-import { Typography, Box, Stack } from '@mui/material';
-import { CheckCircle } from '@mui/icons-material';
-import {Videos} from './Videos';
-import {fetchFromAPI} from '../utils/fetchFromAPI';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
+import { Typography, Box, Stack } from "@mui/material";
+import {CheckCircle} from "@mui/icons-material";
+import { ThumbUp } from "@mui/icons-material";
 
+import { Loader, Videos } from "./";
+import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const VideoDetail = () => {
-  const [VideoDetail, setVideoDetail] = useState(null);
-  const {id} = useParams();
+  const [videoDetail, setVideoDetail] = useState(null);
+  const [videos, setVideos] = useState(null);
+  const { id } = useParams();
 
-  useEffect(()=> {
-    fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data)=> setVideoDetail(data.items[0]));
+  useEffect(() => {
+    fetchFromAPI(`videos?part=snippet,statistics&id=${id}`)
+      .then((data) => setVideoDetail(data.items[0]))
+
+    fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
+      .then((data) => setVideos(data.items))
   }, [id]);
 
-  // console.log(VideoDetail)
+  if(!videoDetail?.snippet) return <Loader/>
+
+  // console.log(videoDetail)
+  // console.log(videoDetail?.snippet.description)
+
+  const { snippet: { title, channelId, channelTitle, description }, statistics: { viewCount, likeCount } } = videoDetail;
+
   return (
-    <Box  ml={3} mt={2}  sx={{boxShadow:"inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255 255 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3)", width: '70vw'}} >
-      <Stack direction={{xs: 'column', md: 'row'}}>
+    <Box minHeight="95vh" ml={1} >
+      <Stack direction={{ xs: "column", md: "row" }}>
         <Box flex={1}>
-          <Box sx={{width: '100%',position: 'sticky', top: '86px'}}>
-          <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls/>
-
-          <Typography variant='h5' fontWeight='bold' mt={1} ml={1} >
-            {VideoDetail?.snippet.title}
+          <Box sx={{ width: "100%",  top: "86px" }}>
+            <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="react-player" controls />
+            <Typography variant='h5' fontWeight='bold' mt={1} ml={1} >
+            {title}
           </Typography>
-
-          <Typography color='gray' sx={{marginTop: '1px'}} ml={1} mt={0}>
-            {VideoDetail?.snippet.channelTitle}
-          </Typography>
+            <Stack direction='row' justifyContent='space-between' px={1} py={1}>
+            <Link to={`/channel/${channelId}`}>
+              <Typography variant={{sm: 'subtitle1', md: 'h6'}} color='gray' >
+                {channelTitle}
+                <CheckCircle sx={{fontSize:'15px', color: 'gray', ml: '5px' }}/>
+              </Typography>
+            </Link>
+            <Stack direction='row' gap='20px' alignItems='center'
+            >
+              <Typography variant='body1' sx={{opacity: 0.7}}>
+                {parseInt(viewCount).toLocaleString()} views
+              </Typography>
+              <Typography variant='body1' sx={{opacity: 0.7}}>
+                <ThumbUp sx={{fontSize:'19px', mr: '5px'}}/>
+                {parseInt(likeCount).toLocaleString()} likes
+              </Typography>
+            </Stack>
+            </Stack>
+            <Stack sx={{backgroundColor:"#6b6365", borderRadius: '12px', px: '12px', py: '12px',
+            }}>
+              <Box color='#fff'>
+                  {description}
+              </Box>
+            </Stack>
           </Box>
+        </Box>
+        <Box  px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
+          <Videos videos={videos} direction="column" />
         </Box>
       </Stack>
     </Box>
-    
-  )
-}
+  );
+};
 
-export default VideoDetail
+export default VideoDetail;
